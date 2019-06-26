@@ -6,7 +6,15 @@ const Pages = {
   },
   getPageList() {
     const files = fs.readdirSync('./resources');
-    return files
+    const excludeFiles = ['.gitignore'];
+    const pages = files
+      .filter(file => !excludeFiles.includes(file))
+      .map(file => {
+        parts = file.split(/\./g);
+        parts.pop();
+        return parts.join(".");
+      })
+    return pages;
   }
 };
 
