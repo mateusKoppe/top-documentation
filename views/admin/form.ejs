@@ -1,5 +1,11 @@
 <h1> Criar Post </h1>
 
+<ul>
+<% pages.forEach(page => {%>
+  <li><a href="pages/<%= page %>"><%= page %></a></li>
+<% }) %>
+</ul>
+
 <form action="/admin" method="POST">
   <div>
     <label for="inputTitle">Titulo: </label>
