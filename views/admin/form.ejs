@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Criar post</title>
   </head>
   <body>
     
@@ -18,7 +18,11 @@
           <h2> Páginas </h2>
           <ul>
             <% pages.forEach(page => {%>
-              <li><a href="pages/<%= page %>"><%= page %></a></li>
+              <li>
+                <a href="pages<%= page.isDirectory ? '?open=' : '/' %><%= page.title %>">
+                  <%= page.title %>
+                </a>
+              </li>
             <% }) %>
           </ul>
         </div>

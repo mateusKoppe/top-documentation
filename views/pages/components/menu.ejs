@@ -1,0 +1,15 @@
+<% pages.forEach(page => {%>
+  <% if (locals.parents) { %> <ul> <% } %>
+  <li>
+    <a href="<%= page.isDirectory ? '?open=' : `/pages/` %><%= `${page.location}` %>">
+      <%= page.title %>
+    </a>
+  </li>
+  <% if (page.childrens){ %>
+    <%- include('./menu.ejs', {
+      pages: page.childrens,
+      parents: page.location
+    }) %>
+  <% } %>
+  <% if (locals.parents) { %> </ul> <% } %>
+<% }) %>
