@@ -15,6 +15,10 @@ const Pages = {
         return parts.join(".");
       })
     return pages;
+  },
+  getPageContent(page) {
+    const content = fs.readFileSync(`./resources/${page}.md`);
+    return content
   }
 };
 

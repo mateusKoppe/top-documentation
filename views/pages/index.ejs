@@ -18,25 +18,14 @@
           <h2> Páginas </h2>
           <ul>
             <% pages.forEach(page => {%>
-              <li><a href="pages/<%= page %>"><%= page %></a></li>
+              <li><a href="/pages/<%= page %>"><%= page %></a></li>
             <% }) %>
+            <li><a href="/admin">Adicionar</a></li>
           </ul>
         </div>
         <div class="col">
-          <h1> Criar Post </h1>
-          <form action="/admin" method="POST">
-            <div class="form-group">
-              <label for="inputTitulo">Titulo</label>
-              <input type="email" class="form-control" id="inputTitulo" aria-describedby="emailHelp" placeholder="Enter email">
-            </div>
-
-            <div class="form-group">
-              <label for="inputDescription">Descrição</label>
-              <textarea class="form-control" id="inputDescription" placeholder="Descrição"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Enviar</button>
-          </form>
+          <h1><%= title %></h1>
+          <div><%= content %></div>
         </div>
       </div>
     </div>
