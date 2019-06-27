@@ -6,7 +6,7 @@
         :to="{
           name: 'PageContent',
           params: {
-            path: page.title
+            path: page.location
           }
         }"
       >{{page.title}}</router-link>
@@ -15,8 +15,8 @@
         <ul v-if="page.isOpened">
           <PagesMenuList
             :list="page.childreen"
-            @onOpenFolder="$emit('onOpenFolder', page)"
-            @onCloseFolder="$emit('onCloseFolder', page)"
+            @onOpenFolder="item => $emit('onOpenFolder', item)"
+            @onCloseFolder="item => $emit('onCloseFolder', item)"
           />
         </ul>
       </template>

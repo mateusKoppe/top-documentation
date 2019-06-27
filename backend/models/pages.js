@@ -33,11 +33,9 @@ const getPageList = (path = '') => {
 
 const getPageActiveList = path => {
   let list = getPageList();
-  console.log(list, 'path', path)
   const folderIndex = list.findIndex(item => path == item.location)
   const activeItem = list[folderIndex];
   const childrens = getPageList(path);
-  console.log(activeItem)
   list[folderIndex] = {
     ...activeItem,
     childrens
