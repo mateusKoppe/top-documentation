@@ -8,6 +8,18 @@ router.get('/', (req, res, next) => {
   res.json({ pages });
 })
 
+router.post('/', (req, res, next) => {
+  try {
+    Pages.createPage({
+      title: req.body.title,
+      description: req.body.description
+    })
+  } catch (error) {
+    console.error(error);
+  }
+  res.json(req.body)
+});
+
 router.get('/:page', function(req, res, next) {
   const path = Pages.formatPath(req.params.page)
   const openPath = Pages.formatPath(req.query.open)
