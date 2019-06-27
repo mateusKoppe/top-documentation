@@ -1,6 +1,6 @@
 <template>
   <div>
-    <li v-for="(page, index) in pageList.pages" :key="index">
+    <li v-for="(page, index) in pageList" :key="index">
       <a href="">
         {{page.title}}
       </a>
@@ -16,7 +16,7 @@ export default {
     ...mapGetters(['pageList'])
   },
   created() {
-    this.$store.dispatch('loadPageList')
+    this.$store.dispatch('pageLoadList')
   },
 }
 </script>

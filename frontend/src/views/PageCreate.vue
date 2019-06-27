@@ -9,15 +9,15 @@
     </div>
     <div class="col">
       <h1> Criar Post </h1>
-      <form action="/admin" method="POST">
+      <form @submit="handleSubmit">
         <div class="form-group">
           <label for="inputTitulo">Titulo</label>
-          <input type="email" class="form-control" id="inputTitulo" aria-describedby="emailHelp" placeholder="Enter email">
+          <input v-model="form.title" class="form-control" id="inputTitulo" placeholder="Titulo">
         </div>
 
         <div class="form-group">
           <label for="inputDescription">Descrição</label>
-          <textarea class="form-control" id="inputDescription" placeholder="Descrição"></textarea>
+          <textarea v-model="form.description" class="form-control" id="inputDescription" placeholder="Descrição"></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Enviar</button>
@@ -33,6 +33,24 @@ import PagesMenu from "../components/PagesMenu";
 export default {
   components: {
     PagesMenu
+  },
+  data () {
+    return {
+      form: {
+        title: '',
+        description: ''
+      }
+    }
+  },
+  methods: {
+    async handleSubmit (event) {
+      event.preventDefault()
+      try {
+        await this.$store.dispatch('pageCreate', { ...this.form });
+      } catch (error) {
+        alert('Erro para cadastrar')
+      }
+    }
   }
 }
 </script>
