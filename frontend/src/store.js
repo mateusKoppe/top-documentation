@@ -22,6 +22,24 @@ export default new Vuex.Store({
       const list = [...state.pageList];
       list.push(item)
       state.pageList = list.sort(orderList)
+    },
+    pageListAddInFolder (state, {folder, pages}) {
+      const list = [...state.pageList];
+      const folderIndex = list.findIndex(item => item.title == folder.title);
+      list[folderIndex].childreen = pages
+      state.pageList = list
+    },
+    pageFolderOpen (state, folder) {
+      const list = [...state.pageList];
+      const folderIndex = list.findIndex(item => item.title == folder.title);
+      list[folderIndex].isOpened = true
+      state.pageList = list
+    },
+    pageCloseFolder (state, folder) {
+      const list = [...state.pageList];
+      const folderIndex = list.findIndex(item => item.title == folder.title);
+      list[folderIndex].isOpened = false
+      state.pageList = list
     }
   },
 
@@ -35,7 +53,7 @@ export default new Vuex.Store({
   },
 
   actions: {
-    pageLoadList(context) {
+    pageLoadList (context) {
       return fetch('http://localhost:3000/pages', {
         mode: 'cors'
       })
@@ -44,7 +62,20 @@ export default new Vuex.Store({
           context.commit('setPageList', response.pages)
         })
     },
-    pageCreate(context, item) {
+    pageLoadFolder (context, folder) {
+      return fetch(`http://localhost:3000/pages/folder/${folder.title}`, {
+        mode: 'cors'
+      })
+        .then(response => response.json())
+        .then(response => {
+          context.commit('pageListAddInFolder', {
+            folder,
+            pages: response.pages
+          })
+          context.commit('pageFolderOpen', folder)
+        })
+    },
+    pageCreate (context, item) {
       return fetch('http://localhost:3000/pages', {
         headers: {
           'Content-Type': 'application/json'
@@ -55,11 +86,10 @@ export default new Vuex.Store({
       })
         .then(response => response.json())
         .then(response => {
-          console.log(response)
           context.commit('pageListAdd', response)
         })
     },
-    pageLoadItem(context, path) {
+    pageLoadItem (context, path) {
       return fetch(`http://localhost:3000/pages/${path}`, {
         mode: 'cors'
       })
@@ -67,6 +97,9 @@ export default new Vuex.Store({
         .then(response => {
           context.commit('setActivePage', response)
         })
+    },
+    pageCloseFolder (context, folder) {
+      context.commit('pageCloseFolder', folder)
     }
   },
 });
