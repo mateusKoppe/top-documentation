@@ -54,8 +54,10 @@ const getPageActiveList = path => {
 }
 
 const getPageContent = (page) => {
-  const content = fs.readFileSync(`./resources/${page}.md`, "utf8");
-  return content
+  const list = getPageList();
+  const pageData = list[page]
+  pageData.content = fs.readFileSync(`./resources/${pageData.file}`, "utf8");
+  return pageData
 }
 
 module.exports = {

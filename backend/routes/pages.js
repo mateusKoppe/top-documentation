@@ -20,9 +20,8 @@ router.post('/', (req, res, next) => {
   res.json(req.body)
 });
 
-router.get('/:page', function(req, res, next) {
-  const path = Pages.formatPath(req.params.page)
-  const content = Pages.getPageContent(path);
+router.get('/:slug', function(req, res, next) {
+  const content = Pages.getPageContent(req.params.slug);
   res.json({
     content,
     title: req.params.page
