@@ -1,43 +1,51 @@
 const fs = require('fs');
 
-const createPage = ({ title, description }) => {
-  fs.writeFileSync(`./resources/${title}.md`, description)
-}
-
-const formatPath = param => {
-  if (!param) return '';
-  return param.replace(/\./g, '/');
+const getSlug = text => {
+  let slug = text.toLowerCase();
+  slug = slug.replace(/\s/g,"-");
+  slug = slug.replace(/[àáâãäå]/g,"a");
+  slug = slug.replace(/æ/g,"ae");
+  slug = slug.replace(/ç/g,"c");
+  slug = slug.replace(/[èéêë]/g,"e");
+  slug = slug.replace(/[ìíîï]/g,"i");
+  slug = slug.replace(/ñ/g,"n");                
+  slug = slug.replace(/[òóôõö]/g,"o");
+  slug = slug.replace(/œ/g,"oe");
+  slug = slug.replace(/[ùúûü]/g,"u");
+  slug = slug.replace(/[ýÿ]/g,"y");
+  slug = slug.replace(/\W/g,"-");
+  return slug
 }
 
 const getPageList = (path = '') => {
-  const folder = formatPath(path)
-  const files = fs.readdirSync(`./resources/${folder}`);
-  const excludeFiles = ['.gitignore'];
-  const pages = files
-    .filter(file => !excludeFiles.includes(file))
-    .map(file => {
-      parts = file.split(/\./g);
-      if (parts.length > 1) parts.pop();
-      const title = parts.join(".");
-      const isDirectory = fs.statSync(`./resources/${folder}/${file}`).isDirectory();
-      const location = `${path ? path + '.' : ''}${title}`;
-      return {
-        title,
-        path,
-        location,
-        isDirectory
-      }
-    })
-  return pages;
+  try {
+    return JSON.parse(fs.readFileSync('./resources/pages.json'));
+  } catch (error) {
+    fs.writeFileSync('./resources/pages.json', '{}');
+    return {};
+  } 
+}
+
+const createPage = ({ title, description }) => {
+  const list = getPageList();
+  const slug = getSlug(title)
+  list[slug] = {
+    file: `pages/${slug}.html`,
+    slug,
+    title,
+  };
+  fs.writeFileSync(`./resources/${list[slug].file}`, description);
+  fs.writeFileSync('./resources/pages.json', JSON.stringify(list));
+  console.log(JSON.stringify(list))
+  return true
+  // fs.writeFileSync(`./resources/${title}.md`, description)
 }
 
 const getPageActiveList = path => {
   let list = getPageList();
-  console.log(list, 'path', path)
   const folderIndex = list.findIndex(item => path == item.location)
   const activeItem = list[folderIndex];
   const childrens = getPageList(path);
-  console.log(activeItem)
   list[folderIndex] = {
     ...activeItem,
     childrens
@@ -52,7 +60,6 @@ const getPageContent = (page) => {
 
 module.exports = {
   createPage,
-  formatPath,
   getPageList,
   getPageActiveList,
   getPageContent

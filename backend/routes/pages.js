@@ -5,7 +5,7 @@ const Pages = require('../models/pages')
 
 router.get('/', (req, res, next) => {
   const pages = Pages.getPageList();
-  res.json({ pages });
+  res.json(pages);
 })
 
 router.post('/', (req, res, next) => {
@@ -31,7 +31,7 @@ router.get('/:page', function(req, res, next) {
 
 router.get('/folder/:folder', function(req, res, next) {
   const pages = Pages.getPageList(req.params.folder);
-  res.json({ pages });
+  res.json(pages);
 });
 
 module.exports = router;
