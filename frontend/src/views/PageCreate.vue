@@ -17,7 +17,7 @@
 
         <div class="form-group">
           <label for="inputDescription">Descrição</label>
-          <textarea v-model="form.description" class="form-control" id="inputDescription" placeholder="Descrição"></textarea>
+          <VueEditor v-model="form.description" id="inputDescription" />
         </div>
 
         <button type="submit" class="btn btn-primary">Enviar</button>
@@ -28,11 +28,14 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
+
 import PagesMenu from "../components/PagesMenu";
 
 export default {
   components: {
-    PagesMenu
+    PagesMenu,
+    VueEditor
   },
   data () {
     return {
