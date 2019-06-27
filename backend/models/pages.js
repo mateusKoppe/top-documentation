@@ -46,7 +46,7 @@ const getPageActiveList = path => {
 }
 
 const getPageContent = (page) => {
-  const content = fs.readFileSync(`./resources/${page}.md`);
+  const content = fs.readFileSync(`./resources/${page}.md`, "utf8");
   return content
 }
 
