@@ -19,7 +19,7 @@ export default new Router({
       component: () => import('./views/PageCreate'),
     },
     {
-      path: '/pages/{id}',
+      path: '/pages/:path',
       name: 'PageContent',
       component: () => import('./views/PageContent'),
     },

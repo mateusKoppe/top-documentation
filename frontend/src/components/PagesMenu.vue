@@ -1,9 +1,12 @@
 <template>
   <div>
     <li v-for="(page, index) in pageList" :key="index">
-      <a href="">
-        {{page.title}}
-      </a>
+      <router-link :to="{
+        name: 'PageContent',
+        params: {
+          path: page.title
+        }
+      }">{{page.title}}</router-link>
     </li>
   </div>
 </template>

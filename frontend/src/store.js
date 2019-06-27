@@ -7,11 +7,16 @@ const orderList = (a, b) => a.title.toLowerCase() > b.title.toLowerCase()
 
 export default new Vuex.Store({
   state: {
-    pageList: []
+    pageList: [],
+    pageActive: {}
   },
+
   mutations: {
     setPageList (state, list) {
       state.pageList = list.sort(orderList)
+    },
+    setActivePage (state, item) {
+      state.pageActive = item
     },
     pageListAdd (state, item) {
       const list = [...state.pageList];
@@ -19,11 +24,16 @@ export default new Vuex.Store({
       state.pageList = list.sort(orderList)
     }
   },
+
   getters: {
     pageList (state) {
       return state.pageList
+    },
+    pageActive (state) {
+      return state.pageActive
     }
   },
+
   actions: {
     pageLoadList(context) {
       return fetch('http://localhost:3000/pages', {
@@ -47,6 +57,15 @@ export default new Vuex.Store({
         .then(response => {
           console.log(response)
           context.commit('pageListAdd', response)
+        })
+    },
+    pageLoadItem(context, path) {
+      return fetch(`http://localhost:3000/pages/${path}`, {
+        mode: 'cors'
+      })
+        .then(response => response.json())
+        .then(response => {
+          context.commit('setActivePage', response)
         })
     }
   },
