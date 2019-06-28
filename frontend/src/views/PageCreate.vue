@@ -28,33 +28,32 @@
 </template>
 
 <script>
-import { VueEditor } from "vue2-editor";
+import { VueEditor } from 'vue2-editor';
 
-import PagesMenu from "../components/PagesMenu";
+import PagesMenu from '../components/PagesMenu';
 
 export default {
   components: {
     PagesMenu,
-    VueEditor
+    VueEditor,
   },
-  data () {
+  data() {
     return {
       form: {
         title: '',
-        description: ''
-      }
-    }
+        description: '',
+      },
+    };
   },
   methods: {
-    async handleSubmit (event) {
-      event.preventDefault()
+    async handleSubmit(event) {
+      event.preventDefault();
       try {
         await this.$store.dispatch('pageCreate', { ...this.form });
       } catch (error) {
-        alert('Erro para cadastrar')
+        alert('Erro para cadastrar');
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
-

@@ -6,7 +6,7 @@
         :to="{
           name: 'PageContent',
           params: {
-            path: page.title
+            path: page.slug
           }
         }"
       >{{page.title}}</router-link>
@@ -32,8 +32,8 @@ export default {
 
   methods: {
     folderNextAction(page) {
-      return page.isOpened ? 'onCloseFolder' : 'onOpenFolder'
-    }
-  }
-}
+      return page.isOpened ? 'onCloseFolder' : 'onOpenFolder';
+    },
+  },
+};
 </script>

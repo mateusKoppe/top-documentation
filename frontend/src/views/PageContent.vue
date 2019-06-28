@@ -16,26 +16,26 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import PagesMenu from "../components/PagesMenu";
+import { mapGetters } from 'vuex';
+import PagesMenu from '../components/PagesMenu';
 
 export default {
   components: {
-    PagesMenu
+    PagesMenu,
   },
 
   computed: {
-    ...mapGetters(['pageActive'])
+    ...mapGetters(['pageActive']),
   },
 
-  created () {
-    this.$store.dispatch('pageLoadItem', this.$route.params.path)
+  created() {
+    this.$store.dispatch('pageLoadItem', this.$route.params.path);
   },
 
   watch: {
-    '$route' () {
-      this.$store.dispatch('pageLoadItem', this.$route.params.path)
-    }
-  }
-}
+    $route() {
+      this.$store.dispatch('pageLoadItem', this.$route.params.path);
+    },
+  },
+};
 </script>
