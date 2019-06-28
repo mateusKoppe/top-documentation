@@ -21,10 +21,11 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:slug', function(req, res, next) {
+  const page = Pages.getPageList(req.params.folder)[req.params.slug];
   const content = Pages.getPageContent(req.params.slug);
   res.json({
-    content,
-    title: req.params.page
+    ...page,
+    ...content
   });
 });
 
