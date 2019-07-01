@@ -23,7 +23,10 @@ export default {
   },
 
   created() {
-    this.listLoad();
+    this.listLoad()
+      .then(response => {
+        console.log(response)
+      });
   },
 
   methods: {

@@ -1,3 +1,5 @@
+import Api from "../common/Api"
+
 export default {
   namespaced: true,
 
@@ -7,7 +9,7 @@ export default {
   },
 
   mutations: {
-    setlist(state, list) {
+    setList(state, list) {
       state.list = list;
     },
     setActivePage(state, item) {
@@ -48,51 +50,29 @@ export default {
   },
 
   actions: {
-    listLoad(context) {
-      return fetch('http://localhost:3000/pages', {
-        mode: 'cors',
-      })
-        .then(response => response.json())
-        .then((response) => {
-          context.commit('setlist', response);
-        });
+    async listLoad(context) {
+      const response = await Api.get('pages')
+      context.commit('setList', response.body);
+      return response
     },
-    folderLoad(context, folder) {
-      return fetch(`http://localhost:3000/pages/folder/${folder.title}`, {
-        mode: 'cors',
-      })
-        .then(response => response.json())
-        .then((response) => {
-          context.commit('listAddInFolder', {
-            folder,
-            pages: response,
-          });
-          context.commit('folderOpen', folder);
-        });
+    async folderLoad(context, folder) {
+      const response = await Api.get(`/pages/folder/${folder.title}`)
+      context.commit('listAddInFolder', {
+        folder,
+        pages: response,
+      });
+      context.commit('folderOpen', folder);
+      return response
     },
-    create(context, item) {
-      console.log(item)
-      return fetch('http://localhost:3000/pages', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        mode: 'cors',
-        method: 'POST',
-        body: JSON.stringify(item),
-      })
-        .then(response => response.json())
-        .then((response) => {
-          context.commit('listAdd', response);
-        });
+    async create(context, item) {
+      const response = await Api.post('pages', item)
+      context.commit('listAdd', response.body);
+      return response
     },
-    loadItem(context, path) {
-      return fetch(`http://localhost:3000/pages/${path}`, {
-        mode: 'cors',
-      })
-        .then(response => response.json())
-        .then((response) => {
-          context.commit('setActivePage', response);
-        });
+    async loadItem(context, path) {
+      const response = await Api.get(`pages/${path}`)
+      context.commit('setActivePage', response.body);
+      return response
     },
     folderClose(context, folder) {
       context.commit('folderClose', folder);

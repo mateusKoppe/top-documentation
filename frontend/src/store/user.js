@@ -22,13 +22,8 @@ export default {
   actions: {
     async login({ commit }, user) {
       const response = await Api.post('/user/login', user)
-      const data = {
-        status: response.status
-      }
-      if (!response.bodyUsed) return data
-      data.body = await response.json()
       commit('setLogged', body)
-      localStorage.setItem('token', body.token)
+      localStorage.setItem('token', response.body.token)
       return data
     }
   },
