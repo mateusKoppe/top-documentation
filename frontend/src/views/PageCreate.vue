@@ -29,6 +29,7 @@
 
 <script>
 import { VueEditor } from 'vue2-editor';
+import { mapActions } from "vuex";
 
 import PagesMenu from '../components/PagesMenu';
 
@@ -37,6 +38,7 @@ export default {
     PagesMenu,
     VueEditor,
   },
+
   data() {
     return {
       form: {
@@ -45,11 +47,14 @@ export default {
       },
     };
   },
+
   methods: {
+    ...mapActions('pages', ['create']),
+
     async handleSubmit(event) {
       event.preventDefault();
       try {
-        await this.$store.dispatch('pageCreate', { ...this.form });
+        await this.create({ ...this.form });
       } catch (error) {
         alert('Erro para cadastrar');
       }

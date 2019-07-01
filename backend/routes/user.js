@@ -39,9 +39,9 @@ router.post('/login', [
 
   const user = User.login(req.body.email, req.body.password)
   if(!user) {
-    return res.status(404).end()
+    return res.status(401).end()
   }
-  res.json(user)
+  res.status(202).json(user)
 })
 
 module.exports = router;

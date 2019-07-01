@@ -15,8 +15,8 @@ export default new Router({
     },
     {
       path: '/login',
-      name: 'Login',
-      component: () => import('./views/Login'),
+      name: 'UserLogin',
+      component: () => import('./views/UserLogin'),
     },
     {
       path: '/pages/create',

@@ -70,7 +70,8 @@ export default {
           context.commit('folderOpen', folder);
         });
     },
-    pageCreate(context, item) {
+    create(context, item) {
+      console.log(item)
       return fetch('http://localhost:3000/pages', {
         headers: {
           'Content-Type': 'application/json',
