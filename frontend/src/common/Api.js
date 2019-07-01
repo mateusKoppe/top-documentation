@@ -26,8 +26,10 @@ export default class Api {
       }
     })
     const data = {
-      status: response.status
+      status: response.status,
+      bodyUsed: response.bodyUsed
     }
+    if (!response.bodyUsed) return data
     data.body = await response.json()
     return data
   }

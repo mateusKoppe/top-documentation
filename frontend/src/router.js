@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Store from './store/index'
 import Router from 'vue-router';
 import Home from './views/Home';
 
@@ -16,6 +17,11 @@ export default new Router({
     {
       path: '/login',
       name: 'UserLogin',
+      async beforeEnter(to, from, next) {
+        const user = await Store.dispatch('user/loadUser')
+        console.log(user)
+        if (!user) next()
+      },
       component: () => import('./views/UserLogin'),
     },
     {

@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <div class="row justify-content-center mt-5">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-8 col-lg-6">
       <form class="card" @submit="handleSubmit">
         <div class="card-header">
           <h2>Login</h2>
@@ -44,6 +44,7 @@ export default {
     async handleSubmit(event) {
       event.preventDefault()
       const response = await this.login(this.form)
+      console.log(response)
       switch(response.status) {
         case 202:
           this.$router.push({name: 'PageCreate'})
