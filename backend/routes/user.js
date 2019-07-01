@@ -44,4 +44,19 @@ router.post('/login', [
   res.status(202).json(user)
 })
 
+router.get('/byToken/:token', (req, res, next) => {
+  const list = User.getList()
+  let user;
+  for (let key in list) {
+    if (list[key].token == req.params.token) {
+      user = list[key]
+      break;
+    }
+  }
+  if(!user) {
+    return res.status(404).end()
+  }
+  res.status(202).json(user)
+})
+
 module.exports = router;

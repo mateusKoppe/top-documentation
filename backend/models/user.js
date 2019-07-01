@@ -35,6 +35,7 @@ class User {
     const user = new User(data.email)
     user.level = data.level
     user.token = User.getRandomToken()
+    user.save()
     return user
   }
 
@@ -51,7 +52,8 @@ class User {
     const data = {
       email: this.email,
       password: this._password,
-      token: this.token
+      token: this.token,
+      level: this.level
     }
     const list = User.getList()
     list[this.email] = data
