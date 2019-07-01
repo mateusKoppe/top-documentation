@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import PagesMenu from '../components/PagesMenu';
 
 export default {
@@ -25,17 +25,23 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['pageActive']),
+    ...mapGetters('pages', ['pageActive']),
   },
 
   created() {
-    this.$store.dispatch('pageLoadItem', this.$route.params.path);
+    this.loadItem(this.$route.params.path);
   },
 
   watch: {
     $route() {
-      this.$store.dispatch('pageLoadItem', this.$route.params.path);
+      this.loadItem(this.$route.params.path);
     },
   },
+
+  methods: {
+    ...mapActions('pages', [
+      'loadItem'
+    ])
+  }
 };
 </script>

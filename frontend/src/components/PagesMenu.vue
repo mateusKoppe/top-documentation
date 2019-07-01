@@ -1,15 +1,15 @@
 <template>
   <div>
     <PagesMenuList
-      :list="pageList"
-      @onOpenFolder="loadFolder"
-      @onCloseFolder="closeFolder"
+      :list="list"
+      @onOpenFolder="folderLoad"
+      @onCloseFolder="folderClose"
     />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import PagesMenuList from './PagesMenuList';
 
@@ -19,20 +19,19 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['pageList']),
+    ...mapGetters('pages', ['list']),
   },
 
   created() {
-    this.$store.dispatch('pageLoadList');
+    this.listLoad();
   },
 
   methods: {
-    loadFolder(folder) {
-      this.$store.dispatch('pageLoadFolder', folder);
-    },
-    closeFolder(folder) {
-      this.$store.dispatch('pageCloseFolder', folder);
-    },
+    ...mapActions('pages', [
+      'folderLoad',
+      'folderClose',
+      'listLoad'
+    ])
   },
 };
 </script>

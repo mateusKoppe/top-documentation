@@ -1,51 +1,46 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+export default {
+  namespaced: true,
 
-Vue.use(Vuex);
-
-const orderList = (a, b) => a.title.toLowerCase() > b.title.toLowerCase();
-
-export default new Vuex.Store({
   state: {
-    pageList: {},
+    list: {},
     pageActive: {},
   },
 
   mutations: {
-    setPageList(state, list) {
-      state.pageList = list;
+    setlist(state, list) {
+      state.list = list;
     },
     setActivePage(state, item) {
       state.pageActive = item;
     },
-    pageListAdd(state, item) {
-      const list = [...state.pageList];
+    listAdd(state, item) {
+      const list = [...state.list];
       list.push(item);
-      state.pageList = list;
+      state.list = list;
     },
-    pageListAddInFolder(state, { folder, pages }) {
-      const list = [...state.pageList];
+    listAddInFolder(state, { folder, pages }) {
+      const list = [...state.list];
       const folderIndex = list.findIndex(item => item.title == folder.title);
       list[folderIndex].childreen = pages;
-      state.pageList = list;
+      state.list = list;
     },
-    pageFolderOpen(state, folder) {
-      const list = [...state.pageList];
+    folderOpen(state, folder) {
+      const list = [...state.list];
       const folderIndex = list.findIndex(item => item.title == folder.title);
       list[folderIndex].isOpened = true;
-      state.pageList = list;
+      state.list = list;
     },
-    pageCloseFolder(state, folder) {
-      const list = [...state.pageList];
+    folderClose(state, folder) {
+      const list = [...state.list];
       const folderIndex = list.findIndex(item => item.title == folder.title);
       list[folderIndex].isOpened = false;
-      state.pageList = list;
+      state.list = list;
     },
   },
 
   getters: {
-    pageList(state) {
-      return state.pageList;
+    list(state) {
+      return state.list;
     },
     pageActive(state) {
       return state.pageActive;
@@ -53,26 +48,26 @@ export default new Vuex.Store({
   },
 
   actions: {
-    pageLoadList(context) {
+    listLoad(context) {
       return fetch('http://localhost:3000/pages', {
         mode: 'cors',
       })
         .then(response => response.json())
         .then((response) => {
-          context.commit('setPageList', response);
+          context.commit('setlist', response);
         });
     },
-    pageLoadFolder(context, folder) {
+    folderLoad(context, folder) {
       return fetch(`http://localhost:3000/pages/folder/${folder.title}`, {
         mode: 'cors',
       })
         .then(response => response.json())
         .then((response) => {
-          context.commit('pageListAddInFolder', {
+          context.commit('listAddInFolder', {
             folder,
             pages: response,
           });
-          context.commit('pageFolderOpen', folder);
+          context.commit('folderOpen', folder);
         });
     },
     pageCreate(context, item) {
@@ -86,10 +81,10 @@ export default new Vuex.Store({
       })
         .then(response => response.json())
         .then((response) => {
-          context.commit('pageListAdd', response);
+          context.commit('listAdd', response);
         });
     },
-    pageLoadItem(context, path) {
+    loadItem(context, path) {
       return fetch(`http://localhost:3000/pages/${path}`, {
         mode: 'cors',
       })
@@ -98,8 +93,8 @@ export default new Vuex.Store({
           context.commit('setActivePage', response);
         });
     },
-    pageCloseFolder(context, folder) {
-      context.commit('pageCloseFolder', folder);
+    folderClose(context, folder) {
+      context.commit('folderClose', folder);
     },
   },
-});
+};
