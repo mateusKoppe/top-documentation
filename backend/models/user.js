@@ -35,8 +35,17 @@ class User {
     const user = new User(data.email)
     user.level = data.level
     user.token = User.getRandomToken()
+    user._password = data.password
     user.save()
     return user
+  }
+
+  data() {
+    return {
+      email: this.email,
+      level: this.level,
+      token: this.token
+    }
   }
 
   encryptPassword(password) {

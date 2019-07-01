@@ -21,11 +21,7 @@ router.post('/', [
   } catch (error) {
     return res.status(500).end()
   }
-  res.status(201)
-    .json({
-      email: user.email,
-      level: user.level
-    })
+  res.status(201).json(user.data())
 })
 
 router.post('/login', [
@@ -41,7 +37,7 @@ router.post('/login', [
   if(!user) {
     return res.status(401).end()
   }
-  res.status(202).json(user)
+  res.status(202).json(user.data())
 })
 
 router.get('/byToken/:token', (req, res, next) => {
