@@ -14,6 +14,11 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/login',
+      name: 'Login',
+      component: () => import('./views/Login'),
+    },
+    {
       path: '/pages/create',
       name: 'PageCreate',
       component: () => import('./views/PageCreate'),
