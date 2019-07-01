@@ -31,7 +31,7 @@ class User {
   static login(email, password) {
     const list = User.getList()
     const data = list[email]
-    if (!User.checkPassword(password, data.password)) return false
+    if (!data || !User.checkPassword(password, data.password)) return false
     const user = new User(data.email)
     user.level = data.level
     user.token = User.getRandomToken()
